@@ -1,3 +1,5 @@
+// js/inMemoryWorkshop.js
+
 let inMemoryWorkshop;
 
 function init() {
@@ -6,7 +8,7 @@ function init() {
 }
 
 function getWorkshopList() {
-    return new Promise((resolve, ) => {
+    return new Promise((resolve,) => {
         resolve(inMemoryWorkshop)
     })
 }

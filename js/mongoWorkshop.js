@@ -1,3 +1,5 @@
+// js/mongoWorkshop.js
+
 const MongoClient = require('mongodb').MongoClient;
 const url = 'mongodb://mongo:27017';
 const dbName = 'workshopDatabase';
@@ -6,21 +8,21 @@ let db;
 
 function init() {
     return new Promise((resolve, reject) => {
-        MongoClient.connect(url, function(err, client) {
+        MongoClient.connect(url, function (err, client) {
             if (err) {
                 return reject(err)
             }
-            console.log("Connected successfully to server");           
+            console.log("Connected successfully to server");
             db = client.db(dbName);
             resolve();
-          });
+        });
     })
 }
 
 function getWorkshopList() {
     return new Promise((resolve, reject) => {
         const collection = db.collection(COLLECTION_NAME);
-        collection.find({}).toArray(function(err, workshops) {
+        collection.find({}).toArray(function (err, workshops) {
             if (err) {
                 return reject(err);
             }
@@ -37,7 +39,7 @@ function getWorkshopByName(name) {
         const collection = db.collection(COLLECTION_NAME);
         collection.find({
             name
-        }).toArray(function(err, workshops) {
+        }).toArray(function (err, workshops) {
             if (err) {
                 return reject(err);
             }
@@ -60,14 +62,14 @@ function addWorkshop(name, description) {
     const collection = db.collection(COLLECTION_NAME);
     return collection.insert({
         name, description
-    }).then(() => {return})
+    }).then(() => { return })
 }
 
 function removeWorkshopByName(name) {
     const collection = db.collection(COLLECTION_NAME);
     return collection.deleteMany({
         name
-    }).then(() => {return})
+    }).then(() => { return })
 }
 
 function updateWorkshop(name, description) {
@@ -76,7 +78,7 @@ function updateWorkshop(name, description) {
         name
     }, {
         description
-    }).then(() => {return})
+    }).then(() => { return })
 }
 
 module.exports = {
