@@ -1,3 +1,5 @@
+// js/mongoWorkshop.js
+
 const MongoClient = require('mongodb').MongoClient;
 const url = 'mongodb://mongo:27017';
 const dbName = 'workshopDatabase';
@@ -6,21 +8,22 @@ let db;
 
 function init() {
     return new Promise((resolve, reject) => {
-        MongoClient.connect(url, function(err, client) {
+        MongoClient.connect(url, function (err, client) {
             if (err) {
+                console.error("Failed to connect to MongoDB:", err);
                 return reject(err)
             }
-            console.log("Connected successfully to server");           
+            console.log("Connected successfully to MongoDB server");
             db = client.db(dbName);
             resolve();
-          });
+        });
     })
 }
 
 function getWorkshopList() {
     return new Promise((resolve, reject) => {
         const collection = db.collection(COLLECTION_NAME);
-        collection.find({}).toArray(function(err, workshops) {
+        collection.find({}).toArray(function (err, workshops) {
             if (err) {
                 return reject(err);
             }
@@ -35,18 +38,16 @@ function getWorkshopByName(name) {
             reject(new Error("name parameter is required"))
         }
         const collection = db.collection(COLLECTION_NAME);
-        collection.find({
-            name
-        }).toArray(function(err, workshops) {
+        collection.findOne({ name: name }, function (err, workshop) {
             if (err) {
                 return reject(err);
             }
-            if (workshops.length > 0) {
-                return resolve(workshops[0])
+            if (workshop) {
+                return resolve(workshop);
             } else {
-                return resolve(null)
+                return reject(new Error("Workshop not found"));
             }
-        })
+        });
     })
 }
 
@@ -60,23 +61,36 @@ function addWorkshop(name, description) {
     const collection = db.collection(COLLECTION_NAME);
     return collection.insert({
         name, description
-    }).then(() => {return})
+    }).then(() => { return })
 }
 
 function removeWorkshopByName(name) {
     const collection = db.collection(COLLECTION_NAME);
     return collection.deleteMany({
         name
-    }).then(() => {return})
+    }).then(() => { return })
 }
 
-function updateWorkshop(name, description) {
+function updateWorkshop(originalName, name, description) {
+    if (!originalName) {
+        return Promise.reject(new Error("Original workshop name required"));
+    }
+    if (!name) {
+        return Promise.reject(new Error("New workshop name required"));
+    }
+    if (!description) {
+        return Promise.reject(new Error("Workshop description required"));
+    }
+
     const collection = db.collection(COLLECTION_NAME);
-    return collection.updateMany({
-        name
-    }, {
-        description
-    }).then(() => {return})
+    return collection.updateOne(
+        { name: originalName },
+        { $set: { name, description } }
+    ).then(result => {
+        if (result.modifiedCount === 0) {
+            throw new Error("Workshop not found");
+        }
+    });
 }
 
 module.exports = {

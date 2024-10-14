@@ -1,6 +1,3 @@
-<!-- ejs/workshop.ejs-->
-
-
 <!DOCTYPE html>
 <html lang="en">
 
@@ -9,25 +6,24 @@
 </head>
 
 <body class="container">
-
-    <form action="/workshop" method="post">
+    <h1>Edit Workshop</h1>
+    <form action="/update-workshop" method="post">
+        <input type="hidden" name="originalName" value="<%= workshop.name %>">
         <div class="form-group">
             <label for="name">Name</label>
-            <input type="text" name="name" class="form-control" id="name" placeholder="Workshop Name" required>
+            <input type="text" name="name" class="form-control" id="name" value="<%= workshop.name %>" required>
         </div>
         <div class="form-group">
             <label for="description">Description</label>
             <input type="text" name="description" class="form-control" id="description"
-                placeholder="Give a description for your workshop" required>
+                value="<%= workshop.description %>" required>
         </div>
-        <button type="submit" class="btn btn-primary">Save</button>
-        <a type="button" class="btn btn-secondary" href="/">Cancel</a>
+        <button type="submit" class="btn btn-primary">Update</button>
+        <a href="/" class="btn btn-secondary">Cancel</a>
     </form>
-
     <footer>
         <% include ./footer %>
     </footer>
-
 </body>
 
 </html>

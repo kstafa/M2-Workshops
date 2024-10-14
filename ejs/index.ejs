@@ -1,31 +1,41 @@
+<!-- index.ejs -->
+
 
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <% include ./head %>
 </head>
+
 <body class="container">
 
-<div class="jumbotron">
-    <h1>Workshops</h1>
-    <p>here is the list of workshop</p>
-</div>
+    <div class="jumbotron">
+        <h1>Workshops</h1>
+        <p>here is the list of workshop</p>
+    </div>
 
-<a type="button" href="/workshop" class="btn btn-success btn-lg">Create new workshop</a>
+    <a type="button" href="/workshop" class="btn btn-success btn-lg">Create new workshop</a>
 
-<ul class="list-unstyled"></ul>
-<% workshops.forEach(function(workshop) { %>
-    <li class="media my-4">
-        <div class="media-body">
-            <h5 class="mt-0 mb-1"><%= workshop.name %></h5>
-            <%= workshop.description %>        </div>        
-    </li>
-<% }); %>
-</ul>
+    <ul class="list-unstyled"></ul>
+    <% workshops.forEach(function(workshop) { %>
+        <li class="media my-4">
+            <div class="media-body">
+                <h5 class="mt-0 mb-1">
+                    <%= workshop.name %>
+                </h5>
+                <%= workshop.description %>
+                    <a href="/workshop/<%= encodeURIComponent(workshop.name) %>/edit"
+                        class="btn btn-primary btn-sm ml-2">Edit</a>
+            </div>
+        </li>
+        <% }); %>
+            </ul>
 
-<footer>
-    <% include ./footer %>
-</footer>
+            <footer>
+                <% include ./footer %>
+            </footer>
 
 </body>
+
 </html>

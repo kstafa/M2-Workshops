@@ -1,3 +1,5 @@
+// js/inMemoryWorkshop.js
+
 let inMemoryWorkshop;
 
 function init() {
@@ -6,7 +8,7 @@ function init() {
 }
 
 function getWorkshopList() {
-    return new Promise((resolve, ) => {
+    return new Promise((resolve,) => {
         resolve(inMemoryWorkshop)
     })
 }
@@ -16,7 +18,12 @@ function getWorkshopByName(name) {
         if (!name) {
             reject(new Error("name parameter is required"))
         }
-        resolve(inMemoryWorkshop.find(workshop => workshop.name === workshop))
+        const workshop = inMemoryWorkshop.find(workshop => workshop.name === name);
+        if (workshop) {
+            resolve(workshop);
+        } else {
+            reject(new Error("Workshop not found"));
+        }
     })
 }
 
@@ -42,10 +49,19 @@ function removeWorkshopByName(name) {
     })
 }
 
-function updateWorkshop(name, description) {
+function updateWorkshop(originalName, name, description) {
     return new Promise((resolve, reject) => {
-        reject(new Error("Not implemented"))
-    })
+        if (!originalName || !name || !description) {
+            reject(new Error("All parameters are required"));
+        }
+        const index = inMemoryWorkshop.findIndex(workshop => workshop.name === originalName);
+        if (index === -1) {
+            reject(new Error("Workshop not found"));
+        } else {
+            inMemoryWorkshop[index] = { name, description };
+            resolve();
+        }
+    });
 }
 
 module.exports = {
