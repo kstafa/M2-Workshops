@@ -45,10 +45,15 @@ function addWorkshop(name, description) {
 
 function removeWorkshopByName(name) {
     return new Promise((resolve, reject) => {
-        reject(new Error("Not implemented"))
-    })
+        const initialLength = inMemoryWorkshop.length;
+        inMemoryWorkshop = inMemoryWorkshop.filter(workshop => workshop.name !== name);
+        if (inMemoryWorkshop.length === initialLength) {
+            reject(new Error("Atelier non trouvé"));
+        } else {
+            resolve();
+        }
+    });
 }
-
 function updateWorkshop(originalName, name, description) {
     return new Promise((resolve, reject) => {
         if (!originalName || !name || !description) {
