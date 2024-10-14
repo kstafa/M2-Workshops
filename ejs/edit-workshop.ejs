@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <% include ./head %>
+</head>
+
+<body class="container">
+    <h1>Edit Workshop</h1>
+    <form action="/update-workshop" method="post">
+        <input type="hidden" name="originalName" value="<%= workshop.name %>">
+        <div class="form-group">
+            <label for="name">Name</label>
+            <input type="text" name="name" class="form-control" id="name" value="<%= workshop.name %>" required>
+        </div>
+        <div class="form-group">
+            <label for="description">Description</label>
+            <input type="text" name="description" class="form-control" id="description"
+                value="<%= workshop.description %>" required>
+        </div>
+        <button type="submit" class="btn btn-primary">Update</button>
+        <a href="/" class="btn btn-secondary">Cancel</a>
+    </form>
+    <footer>
+        <% include ./footer %>
+    </footer>
+</body>
+
+</html>
