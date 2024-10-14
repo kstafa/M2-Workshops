@@ -76,8 +76,15 @@ repository.init().then(() => {
     })
 
     app.post('/update-workshop', function (req, res) {
-        res.status(500).send("TODO")
-    })
+        const originalName = req.body.originalName;
+        const name = req.body.name;
+        const description = req.body.description;
+        repository.updateWorkshop(originalName, name, description)
+            .then(() => {
+                res.redirect('/');
+            })
+            .catch(e => res.status(500).send(e.message));
+    });
 
     app.listen(3000, function () {
         console.log('Workshop app listening on port 3000!')
