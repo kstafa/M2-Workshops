@@ -1,4 +1,4 @@
-<!-- ejs/index.ejs -->
+<!-- index.ejs -->
 
 
 <!DOCTYPE html>
@@ -25,6 +25,7 @@
                     <%= workshop.name %>
                 </h5>
                 <%= workshop.description %>
+                    <a href="/workshop/<%= workshop.name %>/edit" class="btn btn-primary btn-sm ml-2">Edit</a>
             </div>
         </li>
         <% }); %>

@@ -1,3 +1,6 @@
+<!-- ejs/workshop.ejs-->
+
+
 <!DOCTYPE html>
 <html lang="en">
 
@@ -6,45 +9,25 @@
 </head>
 
 <body class="container">
-    <h2>Workshops List</h2>
 
-    <!-- Liste existante des workshops -->
-    <ul>
-        <% workshops.forEach(workshop=> { %>
-            <li>
-                <h4>
-                    <%= workshop.name %>
-                </h4>
-                <p>
-                    <%= workshop.description %>
-                </p>
-                <a href="/workshop/edit/<%= workshop.name %>" class="btn btn-info">Edit</a>
-            </li>
-            <% }) %>
-    </ul>
+    <form action="/workshop" method="post">
+        <div class="form-group">
+            <label for="name">Name</label>
+            <input type="text" name="name" class="form-control" id="name" placeholder="Workshop Name" required>
+        </div>
+        <div class="form-group">
+            <label for="description">Description</label>
+            <input type="text" name="description" class="form-control" id="description"
+                placeholder="Give a description for your workshop" required>
+        </div>
+        <button type="submit" class="btn btn-primary">Save</button>
+        <a type="button" class="btn btn-secondary" href="/">Cancel</a>
+    </form>
 
-    <!-- Formulaire de mise à jour d'un workshop spécifique -->
-    <% if (workshop) { %>
-        <h2>Update Workshop</h2>
-        <form action="/update-workshop" method="post">
-            <div class="form-group">
-                <label for="name">Name</label>
-                <input type="text" name="name" class="form-control" id="name" placeholder="Workshop Name"
-                    value="<%= workshop.name %>" readonly>
-            </div>
-            <div class="form-group">
-                <label for="description">Description</label>
-                <input type="text" name="description" class="form-control" id="description"
-                    value="<%= workshop.description %>" placeholder="Update the description" required>
-            </div>
-            <button type="submit" class="btn btn-primary">Update</button>
-            <a type="button" class="btn btn-secondary" href="/">Cancel</a>
-        </form>
-        <% } %>
+    <footer>
+        <% include ./footer %>
+    </footer>
 
-            <footer>
-                <% include ./footer %>
-            </footer>
 </body>
 
 </html>
