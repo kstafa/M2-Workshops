@@ -44,10 +44,16 @@ function removeWorkshopByName(name) {
     })
 }
 
-function updateWorkshop(name, description) {
+function updateWorkshop(originalName, name, description) {
     return new Promise((resolve, reject) => {
-        reject(new Error("Not implemented"))
-    })
+        const index = inMemoryWorkshop.findIndex(workshop => workshop.name === originalName);
+        if (index === -1) {
+            reject(new Error("Workshop not found"));
+        } else {
+            inMemoryWorkshop[index] = { name, description };
+            resolve();
+        }
+    });
 }
 
 module.exports = {
