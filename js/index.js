@@ -58,15 +58,21 @@ repository.init().then(() => {
 
     app.get('/workshop/:name/edit', function (req, res) {
         const workshopName = req.params.name;
+        console.log("Attempting to edit workshop:", workshopName);
         repository.getWorkshopByName(workshopName)
             .then(workshop => {
                 if (workshop) {
+                    console.log("Workshop found:", workshop);
                     res.render('edit-workshop', { workshop: workshop });
                 } else {
+                    console.log("Workshop not found:", workshopName);
                     res.status(404).send('Workshop not found');
                 }
             })
-            .catch(e => res.status(500).send(e.message));
+            .catch(e => {
+                console.error("Error when getting workshop:", e);
+                res.status(500).send(e.message)
+            });
     });
 
 
