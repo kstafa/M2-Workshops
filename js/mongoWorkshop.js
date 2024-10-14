@@ -66,11 +66,13 @@ function addWorkshop(name, description) {
 
 function removeWorkshopByName(name) {
     const collection = db.collection(COLLECTION_NAME);
-    return collection.deleteMany({
-        name
-    }).then(() => { return })
+    return collection.deleteOne({ name: name })
+        .then(result => {
+            if (result.deletedCount === 0) {
+                throw new Error("Atelier non trouvé");
+            }
+        });
 }
-
 function updateWorkshop(originalName, name, description) {
     if (!originalName) {
         return Promise.reject(new Error("Original workshop name required"));
