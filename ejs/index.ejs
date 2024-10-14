@@ -25,8 +25,12 @@
                     <%= workshop.name %>
                 </h5>
                 <%= workshop.description %>
-                    <a href="/workshop/<%= encodeURIComponent(workshop.name) %>/edit"
-                        class="btn btn-primary btn-sm ml-2">Edit</a>
+                    <a href="/workshop/<%= workshop.name %>/edit" class="btn btn-primary btn-sm ml-2">Modifier</a>
+                    <form action="/remove-workshop" method="POST" class="d-inline">
+                        <input type="hidden" name="name" value="<%= workshop.name %>">
+                        <button type="submit" class="btn btn-danger btn-sm ml-2"
+                            onclick="return confirm('Êtes-vous sûr de vouloir supprimer cet atelier ?');">Supprimer</button>
+                    </form>
             </div>
         </li>
         <% }); %>

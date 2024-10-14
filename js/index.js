@@ -78,8 +78,13 @@ repository.init().then(() => {
 
 
     app.post('/remove-workshop', function (req, res) {
-        res.status(500).send("TODO")
-    })
+        const workshopName = req.body.name;
+        repository.removeWorkshopByName(workshopName)
+            .then(() => {
+                res.redirect('/');
+            })
+            .catch(e => res.status(500).send(e.message));
+    });
 
     app.post('/update-workshop', function (req, res) {
         const originalName = req.body.originalName;
