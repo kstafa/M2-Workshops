@@ -56,6 +56,19 @@ repository.init().then(() => {
             .catch(e => ejs.send(e.message))
     })
 
+    app.get('/workshop/:name/edit', function (req, res) {
+        const workshopName = req.params.name;
+        repository.getWorkshopByName(workshopName)
+            .then(workshop => {
+                if (workshop) {
+                    res.render('edit-workshop', { workshop: workshop });
+                } else {
+                    res.status(404).send('Workshop not found');
+                }
+            })
+            .catch(e => res.status(500).send(e.message));
+    });
+
 
 
     app.post('/remove-workshop', function (req, res) {
