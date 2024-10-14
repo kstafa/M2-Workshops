@@ -73,6 +73,7 @@ function removeWorkshopByName(name) {
             }
         });
 }
+
 function updateWorkshop(originalName, name, description) {
     if (!originalName) {
         return Promise.reject(new Error("Original workshop name required"));
