@@ -72,13 +72,16 @@ function removeWorkshopByName(name) {
     }).then(() => { return })
 }
 
-function updateWorkshop(name, description) {
+function updateWorkshop(originalName, name, description) {
     const collection = db.collection(COLLECTION_NAME);
-    return collection.updateMany({
-        name
-    }, {
-        description
-    }).then(() => { return })
+    return collection.updateOne(
+        { name: originalName },
+        { $set: { name, description } }
+    ).then(result => {
+        if (result.modifiedCount === 0) {
+            throw new Error("Workshop not found");
+        }
+    });
 }
 
 module.exports = {
