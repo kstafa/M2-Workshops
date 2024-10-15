@@ -6,8 +6,8 @@ const app = express()
 const path = require("path")
 const ejs = require('ejs')
 var bodyParser = require('body-parser')
-const repository = require('./inMemoryWorkshop');
-//const repository = require("./mongoWorkshop");
+//const repository = require('./inMemoryWorkshop');
+const repository = require("./mongoWorkshop");
 
 repository.init().then(() => {
 
